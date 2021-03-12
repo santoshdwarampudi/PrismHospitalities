@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "982588614139",
+    "project_id": "prism-hospitalities",
+    "storage_bucket": "prism-hospitalities.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982588614139:android:4bdf52b5721b9974b0d75e",
+        "android_client_info": {
+          "package_name": "com.prismhospitalities"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982588614139-uniq57qrttcvfeq2kg2kfgdca0164m29.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prismhospitalities",
+            "certificate_hash": "47d4bdac09cfc4baebb907188005c305b93efc84"
+          }
+        },
+        {
+          "client_id": "982588614139-kcjlkn5rrd848i8j8bo8q3nhqbvu6gj2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgvlGxgIM64Y0zO0_G9m-slg2_zKytBiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982588614139-kcjlkn5rrd848i8j8bo8q3nhqbvu6gj2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
