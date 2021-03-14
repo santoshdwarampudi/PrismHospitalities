@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash"
-    android:id="@+id/coordinator"
+    android:background="@drawable/intro_screen"
     tools:context=".activities.SplashActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

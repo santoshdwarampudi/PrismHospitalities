@@ -109,7 +109,7 @@ public class MapsActivity extends BaseAppCompactActivity implements OnMapReadyCa
             mMap.clear();
             MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(LocationUtil.getAreaName(latLng, this));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
             mMap.addMarker(markerOptions);
             tv_location.setText(LocationUtil.getCompleteAddressString(latLng, this));
         }

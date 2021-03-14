@@ -7,10 +7,33 @@
 
     <me.dm7.barcodescanner.zxing.ZXingScannerView
         android:id="@+id/zxing_barcode_scanner"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
     </me.dm7.barcodescanner.zxing.ZXingScannerView>
 
+    <ImageView
+        android:id="@+id/ib_flashOn"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_alignEnd="@+id/ib_flashOff"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:src="@drawable/ic_flash_on" />
+
+    <ImageView
+        android:id="@+id/ib_flashOff"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:src="@drawable/ic_flash_off"
+        android:visibility="gone" />
 
 </RelativeLayout>

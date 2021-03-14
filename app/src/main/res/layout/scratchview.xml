@@ -23,7 +23,7 @@
                 android:id="@+id/iv_offer"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="@dimen/_90sdp"
-                android:src="@drawable/ic_logo" />
+                android:src="@mipmap/ic_launcher" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_wonprice"
@@ -37,10 +37,10 @@
 
         <com.anupkumarpanwar.scratchview.ScratchView
             android:id="@+id/scratch_view"
-            android:layout_width="@dimen/_160sdp"
-            android:layout_height="@dimen/_160sdp"
             app:overlay_height="@dimen/_160sdp"
             app:overlay_width="@dimen/_160sdp"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_160sdp"
             card_view:overlay_image="@drawable/ic_scratchoverlay" />
     </androidx.cardview.widget.CardView>
 
