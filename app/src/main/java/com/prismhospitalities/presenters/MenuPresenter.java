@@ -2,6 +2,7 @@ package com.prismhospitalities.presenters;
 
 import com.prismhospitalities.interfaces.ApiInterface;
 import com.prismhospitalities.interfaces.IMenuView;
+import com.prismhospitalities.models.responses.CartDetailsResponse;
 import com.prismhospitalities.models.responses.MenuItemsResponse;
 import com.prismhospitalities.models.responses.MenuTypesResponse;
 
@@ -58,6 +59,27 @@ public class MenuPresenter {
                     iMenuView.dismissProgress();
                 iMenuView.getMenuItemsFailed();
 
+            }
+        });
+    }
+
+    public void getCartDetails(final boolean showProgress, String userId) {
+        if (showProgress)
+            iMenuView.showProgressDialog("Getting Cart Items");
+        Call<CartDetailsResponse> cartDetailsResponseCall = apiInterface.getCartDetails(userId);
+        cartDetailsResponseCall.enqueue(new Callback<CartDetailsResponse>() {
+            @Override
+            public void onResponse(Call<CartDetailsResponse> call, Response<CartDetailsResponse> response) {
+                if (showProgress)
+                    iMenuView.dismissProgress();
+                iMenuView.getCartDetailSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<CartDetailsResponse> call, Throwable t) {
+                if (showProgress)
+                    iMenuView.dismissProgress();
+                iMenuView.getCartDetailFailed();
             }
         });
     }

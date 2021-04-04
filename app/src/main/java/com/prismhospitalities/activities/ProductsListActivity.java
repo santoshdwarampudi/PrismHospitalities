@@ -10,13 +10,16 @@ import android.widget.TextView;
 import com.prismhospitalities.R;
 import com.prismhospitalities.adapters.MenuProductAdapter;
 import com.prismhospitalities.baseui.BaseAppCompactActivity;
+import com.prismhospitalities.helpers.CartHelper;
 import com.prismhospitalities.interfaces.IMenuProductView;
 import com.prismhospitalities.interfaces.StringConstants;
+import com.prismhospitalities.models.responses.AddCartResponse;
 import com.prismhospitalities.models.responses.MenuItemResponseData;
 import com.prismhospitalities.models.responses.MenuProductsResponse;
 import com.prismhospitalities.models.responses.MenuProductsResponseData;
 import com.prismhospitalities.presenters.MenuProductPresenter;
 import com.prismhospitalities.utils.APIClient;
+import com.prismhospitalities.utils.PrefUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -69,7 +72,8 @@ public class ProductsListActivity extends BaseAppCompactActivity implements IMen
 
 
     private void initRecyclerView() {
-        menuProductAdapter = new MenuProductAdapter(getApplicationContext(), null, this::onItemClick);
+        menuProductAdapter = new MenuProductAdapter(getApplicationContext(),
+                null, this, CartHelper.getInstance().getCartList());
         // GridLayoutManager manager = new GridLayoutManager(ProductsListActivity.this, 2, GridLayoutManager.VERTICAL, false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductsListActivity.this, RecyclerView.VERTICAL, false);
         rv_menuItems.setLayoutManager(linearLayoutManager);
@@ -98,6 +102,16 @@ public class ProductsListActivity extends BaseAppCompactActivity implements IMen
         menuProductAdapter.setData(null);
     }
 
+    @Override
+    public void addToCartSuccess(AddCartResponse addCartResponse, int position) {
+
+    }
+
+    @Override
+    public void addToCartFailed() {
+        showToast("failed to add to cart");
+    }
+
 
     @Override
     public boolean isUsable() {
@@ -114,5 +128,13 @@ public class ProductsListActivity extends BaseAppCompactActivity implements IMen
             showToast("No Details found for this product");
         }
 
+    }
+
+    @Override
+    public void onAddCartClick(String quantity, MenuProductsResponseData menuProductsResponseData, int position) {
+        if (menuProductPresenter == null)
+            menuProductPresenter = new MenuProductPresenter(this, APIClient.getAPIService());
+        menuProductPresenter.addOrRemoveFromCart(true, menuProductsResponseData.getId(),
+                PrefUtils.getInstance().getUserId() + "", quantity, position);
     }
 }

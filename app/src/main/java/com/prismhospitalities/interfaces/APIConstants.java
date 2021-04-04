@@ -1,5 +1,7 @@
 package com.prismhospitalities.interfaces;
 
+import static com.prismhospitalities.interfaces.StringConstants.PRODUCTID;
+import static com.prismhospitalities.interfaces.StringConstants.QUANTITY;
 import static com.prismhospitalities.interfaces.StringConstants.SCRATCHCARDID;
 import static com.prismhospitalities.interfaces.StringConstants.USERID;
 
@@ -14,6 +16,8 @@ public interface APIConstants {
     String USERDETAILS = "Userdetails/get_userdetails_by_id/" + USERID;
     String SCRATCHCARDS = "Userdetails/getscratchcards/" + USERID;
     String UPDATESCRATCHSTATUS = "Userdetails/scratchstatus/" + SCRATCHCARDID;
+    String ADDCART = "common/addtocart/" + PRODUCTID + "/" + USERID + "/" + QUANTITY;
+    String CARTDETAILS = "common/cartdetails/" + USERID;
 
 
 }

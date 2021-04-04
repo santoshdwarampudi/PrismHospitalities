@@ -13,6 +13,9 @@ public class MenuProductsResponseData implements Serializable {
     @SerializedName("title")
     @Expose
     private String title;
+    @SerializedName("quantity")
+    @Expose
+    private String quantity;
     @SerializedName("stock")
     @Expose
     private String stock;
@@ -171,5 +174,13 @@ public class MenuProductsResponseData implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }

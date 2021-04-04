@@ -20,6 +20,7 @@ import com.prismhospitalities.R;
 import com.prismhospitalities.models.responses.MenuProductsResponseData;
 import com.prismhospitalities.widgets.StrikeTextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,11 +31,15 @@ public class MenuProductAdapter extends RecyclerView.Adapter<MenuProductAdapter.
     private Context context;
     private List<MenuProductsResponseData> menuProductsResponseDataList;
     private ItemListener itemListener;
+    private HashMap<String, String> cartList = new HashMap<String, String>();
 
-    public MenuProductAdapter(Context context, List<MenuProductsResponseData> menuProductsResponseDataList, ItemListener itemListener) {
+    public MenuProductAdapter(Context context,
+                              List<MenuProductsResponseData> menuProductsResponseDataList,
+                              ItemListener itemListener, HashMap<String, String> cartList) {
         this.context = context;
         this.menuProductsResponseDataList = menuProductsResponseDataList;
         this.itemListener = itemListener;
+        this.cartList = cartList;
     }
 
     public void setData(List<MenuProductsResponseData> menuProductsResponseData) {
@@ -75,17 +80,86 @@ public class MenuProductAdapter extends RecyclerView.Adapter<MenuProductAdapter.
         TextView tv_offerprice;
         @BindView(R.id.retail_layout)
         LinearLayout retail_layout;
+        @BindView(R.id.quantity_layout)
+        LinearLayout quantity_layout;
+        @BindView(R.id.tv_addCart)
+        TextView tv_addCart;
+        @BindView(R.id.tv_quantity)
+        TextView tv_quantity;
 
-        @OnClick(R.id.relativeLayout)
+        @OnClick(R.id.iv_banner)
         void onItemClick() {
             if (itemListener != null) {
                 itemListener.onItemClick(getAdapterPosition(), menuProductsResponseDataList.get(getAdapterPosition()));
             }
         }
 
+        @OnClick(R.id.tv_addCart)
+        void onAddCartClick() {
+            tv_addCart.setVisibility(View.GONE);
+            quantity_layout.setVisibility(View.VISIBLE);
+            if (itemListener != null) {
+                itemListener.onAddCartClick(1 + "",
+                        menuProductsResponseDataList.get(getAdapterPosition()),
+                        getAdapterPosition());
+            }
+        }
+
+        @OnClick(R.id.tv_plus)
+        void onPlusClick() {
+            int quantity = changeQuantity(true);
+            if (itemListener != null) {
+                itemListener.onAddCartClick(quantity + "",
+                        menuProductsResponseDataList.get(getAdapterPosition()),
+                        getAdapterPosition());
+            }
+        }
+
+        @OnClick(R.id.tv_minus)
+        void onMinusClick() {
+            if (tv_quantity.getText().toString().equals("1")) {
+                tv_addCart.setVisibility(View.VISIBLE);
+                quantity_layout.setVisibility(View.GONE);
+                if (itemListener != null) {
+                    itemListener.onAddCartClick(0 + "",
+                            menuProductsResponseDataList.get(getAdapterPosition()),
+                            getAdapterPosition());
+                }
+            } else {
+                int quantity = changeQuantity(false);
+                if (quantity == 0) {
+                    tv_addCart.setVisibility(View.VISIBLE);
+                    quantity_layout.setVisibility(View.GONE);
+                }
+                if (itemListener != null) {
+                    itemListener.onAddCartClick(quantity + "",
+                            menuProductsResponseDataList.get(getAdapterPosition()),
+                            getAdapterPosition());
+                }
+            }
+        }
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+
+        public int changeQuantity(boolean isAdd) {
+            int quantity = 0;
+            String str_quantity = tv_quantity.getText().toString();
+            if (str_quantity != null && !str_quantity.isEmpty()) {
+                quantity = Integer.parseInt(str_quantity);
+            }
+            if (quantity != 0) {
+                if (isAdd) {
+                    quantity++;
+                } else {
+                    quantity--;
+                }
+            }
+            tv_quantity.setText(quantity + "");
+            return quantity;
         }
 
         public void setData(MenuProductsResponseData menuProductsResponseData) {
@@ -119,11 +193,23 @@ public class MenuProductAdapter extends RecyclerView.Adapter<MenuProductAdapter.
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(iv_banner);
             }
+            if (cartList != null && cartList.size() > 0) {
+                if (cartList.containsKey(menuProductsResponseData.getId())) {
+                    tv_addCart.setVisibility(View.GONE);
+                    quantity_layout.setVisibility(View.VISIBLE);
+                    tv_quantity.setText(cartList.get(menuProductsResponseData.getId()));
+                } else {
+                    tv_addCart.setVisibility(View.VISIBLE);
+                    quantity_layout.setVisibility(View.GONE);
+                }
+            }
 
         }
     }
 
     public interface ItemListener {
         void onItemClick(int position, MenuProductsResponseData menuProductsResponseData);
+
+        void onAddCartClick(String quantity, MenuProductsResponseData menuProductsResponseData, int position);
     }
 }

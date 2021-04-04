@@ -19,16 +19,21 @@ import com.prismhospitalities.R;
 import com.prismhospitalities.activities.ProductsListActivity;
 import com.prismhospitalities.adapters.MenuItemsAdapter;
 import com.prismhospitalities.baseui.BaseFragment;
+import com.prismhospitalities.helpers.CartHelper;
 import com.prismhospitalities.interfaces.IMenuView;
 import com.prismhospitalities.interfaces.StringConstants;
+import com.prismhospitalities.models.responses.CartDetailsResponse;
 import com.prismhospitalities.models.responses.MenuItemResponseData;
 import com.prismhospitalities.models.responses.MenuItemsResponse;
+import com.prismhospitalities.models.responses.MenuProductsResponseData;
 import com.prismhospitalities.models.responses.MenuTypeResponseData;
 import com.prismhospitalities.models.responses.MenuTypesResponse;
 import com.prismhospitalities.presenters.MenuPresenter;
 import com.prismhospitalities.utils.APIClient;
+import com.prismhospitalities.utils.PrefUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -116,6 +121,14 @@ public class HomeFragment extends BaseFragment implements IMenuView, MenuItemsAd
         rv_menuItems.setLayoutManager(mLayoutManager);
         rv_menuItems.setItemAnimator(new DefaultItemAnimator());
         rv_menuItems.setAdapter(menuItemsAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (menuPresenter == null)
+            menuPresenter = new MenuPresenter(this, APIClient.getAPIService());
+        menuPresenter.getCartDetails(false, PrefUtils.getInstance().getUserId() + "");
     }
 
     private void initTabChangeListener() {
@@ -227,6 +240,24 @@ public class HomeFragment extends BaseFragment implements IMenuView, MenuItemsAd
     public void getMenuItemsFailed() {
         menuItemsAdapter.setData(null);
         showToast("Failed to get the menu Items");
+    }
+
+    @Override
+    public void getCartDetailSuccess(CartDetailsResponse cartDetailsResponse) {
+        if (cartDetailsResponse != null && cartDetailsResponse.getCartdetails() != null &&
+                cartDetailsResponse.getCartdetails().size() > 0) {
+            HashMap<String, String> cartList = new HashMap<String, String>();
+            for (MenuProductsResponseData menuProductsResponseData :
+                    cartDetailsResponse.getCartdetails()) {
+                cartList.put(menuProductsResponseData.getId(), menuProductsResponseData.getQuantity());
+            }
+            CartHelper.getInstance().setCartList(cartList);
+        }
+    }
+
+    @Override
+    public void getCartDetailFailed() {
+
     }
 
     @Override

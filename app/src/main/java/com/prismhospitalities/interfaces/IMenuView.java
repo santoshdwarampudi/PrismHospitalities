@@ -1,5 +1,6 @@
 package com.prismhospitalities.interfaces;
 
+import com.prismhospitalities.models.responses.CartDetailsResponse;
 import com.prismhospitalities.models.responses.MenuItemsResponse;
 import com.prismhospitalities.models.responses.MenuTypesResponse;
 
@@ -11,4 +12,8 @@ public interface IMenuView extends IBaseView {
     void getMenuItemsSuccess(MenuItemsResponse menuItemsResponse);
 
     void getMenuItemsFailed();
+
+    void getCartDetailSuccess(CartDetailsResponse cartDetailsResponse);
+
+    void getCartDetailFailed();
 }

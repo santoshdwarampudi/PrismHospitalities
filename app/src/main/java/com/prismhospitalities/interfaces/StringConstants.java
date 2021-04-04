@@ -13,5 +13,7 @@ public interface StringConstants {
     String FOODITEM = "Food Item";
     String NONE = "none";
     String BETTERLUCKNEXTTIME = "Better luck Next Time";
+    String PRODUCTID = "{productId}";
+    String QUANTITY = "{quantity}";
 
 }

@@ -2,6 +2,8 @@ package com.prismhospitalities.interfaces;
 
 import com.prismhospitalities.models.requests.LoginRequest;
 import com.prismhospitalities.models.requests.RegisterRequest;
+import com.prismhospitalities.models.responses.AddCartResponse;
+import com.prismhospitalities.models.responses.CartDetailsResponse;
 import com.prismhospitalities.models.responses.LoginResponse;
 import com.prismhospitalities.models.responses.MenuItemsResponse;
 import com.prismhospitalities.models.responses.MenuProductsResponse;
@@ -45,6 +47,15 @@ public interface ApiInterface {
     Call<ScratchCardResponse> getScratchCards(@Path("userId") String userId);
 
     @GET(APIConstants.UPDATESCRATCHSTATUS)
-    Call<UpdateScratchResponse> updateScratchCardResponse(@Path("scratchCardId") String scratchCardId);
+    Call<UpdateScratchResponse> updateScratchCardResponse(@Path("scratchCardId")
+                                                                  String scratchCardId);
+
+    @GET(APIConstants.ADDCART)
+    Call<AddCartResponse> addToCart(@Path("productId") String productId,
+                                    @Path("userId") String userId,
+                                    @Path("quantity") String quantity);
+
+    @GET(APIConstants.CARTDETAILS)
+    Call<CartDetailsResponse> getCartDetails(@Path("userId") String userId);
 
 }
